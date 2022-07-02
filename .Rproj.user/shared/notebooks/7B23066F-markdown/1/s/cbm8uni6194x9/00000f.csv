@@ -1,0 +1,5 @@
+"0","library(knitr)"
+"0","kable(table(amostra$COMPUTADOR),"
+"0","      col.names=c(""Quantidade de computadores"",""Frequência""))"
+"2","Error in nchar(cn, type = ""width"") : invalid multibyte string, element 2
+"
