@@ -1,15 +1,53 @@
 ---
-title: "Untitled"
-author: "Bruno"
+title: "ANÁLISE DESCRITIVA DE DADOS - RESULTADOS DO SAEB (ANEB - PROVA BRASIL) - 2017"
+author: "Bruno Gondim Toledo"
 date: '2022-07-01'
 output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+library(tidyverse)
+library(RColorBrewer)
+library(viridis)  
+library(e1071)
+library(psych)
+library(pastecs)
+library(knitr)
+
+amostra <- read_csv("Banco/amostra_150167636.csv")
+
+# summary(amostra$NOTA_LP)
+# str(amostra)
+
+amostra <- amostra %>%
+  mutate_if(sapply(amostra, is.character), as.factor)
+amostra$ANO <- factor(amostra$ANO)
+amostra$MUNICIPIO <- factor(amostra$MUNICIPIO)
+
+amostra$COMPUTADOR <- factor(amostra$COMPUTADOR,levels = c("Não tem", "Sim, um", "Sim, dois","Sim, três","quatro ou mais"))
+
+amostra$ESC_MAE <- factor(amostra$ESC_MAE,levels = c("Nunca estudou",
+"Não completou a 4.ª série/5.º ano do Ensino Fundamental ",
+"Completou a 4.ª série/5.º ano, mas não completou a 8.ª série/9.º ano do Ensino Fundamental",
+"Completou a 8.ª série/9.º ano do Ensino Fundamental, mas não completou o Ensino Médio",
+"Completou o Ensino Médio, mas não completou a Faculdade",
+"Completou a Faculdade","Não sei"))
+
+amostra$ESC_PAI <- factor(amostra$ESC_PAI,levels = c("Nunca estudou",
+"Não completou a 4.ª série/5.º ano do Ensino Fundamental ",
+"Completou a 4.ª série/5.º ano, mas não completou a 8.ª série/9.º ano do Ensino Fundamental",
+"Completou a 8.ª série/9.º ano do Ensino Fundamental, mas não completou o Ensino Médio",
+"Completou o Ensino Médio, mas não completou a Faculdade",
+"Completou a Faculdade","Não sei"))
+
+amostra$COMPUTADOR <- factor(amostra$COMPUTADOR,levels = c("Não faço trabalhos domésticos",
+"Menos de 1 hora", "Entre 1 e 2 horas","Mais de 2 horas, até 3 horas","Mais de 3 horas"))
+
 ```
 
-ANÁLISE DESCRITIVA DE DADOS - RESULTADOS DO SAEB (ANEB - PROVA BRASIL) - 2017
+
 
 1. Comente sobre a coleta de dados do SAEB: população alvo, população acessível, características levantadas, método de coleta (no máximo 10 linhas).
 
@@ -17,11 +55,7 @@ ANÁLISE DESCRITIVA DE DADOS - RESULTADOS DO SAEB (ANEB - PROVA BRASIL) - 2017
 
 2. Liste as variáveis disponibilizadas na amostra que você recebeu (com seu número de matrícula) e classifique-as segundo o tipo.
 
-```{r }
-str(amostra)
-```
-
-ANO: ano de realização do SAEB [Varável qualitativa nominal]
+ANO: ano de realização do SAEB [Variável qualitativa nominal]
 
 REGIAO: Região de localização da escola do estudante (1-Norte, 2-Nordeste, 3-Sudeste, 4-Sul, 5-Centro-Oeste) [Variável qualitativa nominal]
 
@@ -62,6 +96,38 @@ Perspectivas: Perspectivas futuras [Variável qualitativa nominal]
 
 
 3. Escolha CINCO variáveis categóricas e apresente-as em forma tabular e gráfica. Comente os resultados.
+
+PERSPECTIVAS        
+```{r, echo=FALSE}
+kable(table(amostra$PERSPECTIVAS),
+      col.names=c("Perspectivas futuras","Frequência"))
+```
+
+ESC_MAE         
+```{r, echo=FALSE}
+kable(table(amostra$ESC_MAE),
+      col.names=c("Escolaridade da mãe","Frequência"))
+```
+
+ESC_PAI        
+```{r, echo=FALSE}
+kable(table(amostra$ESC_PAI),
+      col.names=c("Escolaridade do pai","Frequência"))
+```
+
+AFAZERES_DOM         
+```{r, echo=FALSE}
+kable(table(amostra$AFAZERES_DOM),
+      col.names=c("Tempo gasto fazendo trabalhos domésticos","Frequência"))
+```
+
+TRABALHO
+```{r, echo=FALSE}
+kable(table(amostra$TRABALHO),
+      col.names=c("Se trabalha","Frequência"))
+```
+
+
 
 4. Para as variáveis quantitativas NOTA_LP e NOTA_MT apresente:
 
