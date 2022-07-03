@@ -109,49 +109,108 @@ ggplot(amostra,aes(TRABALHO)) +
 
 #--------------------------------------------------
 
-# Exemplo:
 # < 200 | <200-250 | 250-300 | 300-350 | 350 +
-# lp1 <- amostra$NOTA_LP[amostra$NOTA_LP<200]
-# lp2 <- amostra$NOTA_LP[amostra$NOTA_LP>200&amostra$NOTA_LP<250]
-# lp3 <- amostra$NOTA_LP[amostra$NOTA_LP>250&amostra$NOTA_LP<300]
-# lp4 <- amostra$NOTA_LP[amostra$NOTA_LP>300&amostra$NOTA_LP<350]
-# lp5 <- amostra$NOTA_LP[amostra$NOTA_LP>350]
+lp1 <- amostra$NOTA_LP[amostra$NOTA_LP<200]
+lp2 <- amostra$NOTA_LP[amostra$NOTA_LP>200&amostra$NOTA_LP<250]
+lp3 <- amostra$NOTA_LP[amostra$NOTA_LP>250&amostra$NOTA_LP<300]
+lp4 <- amostra$NOTA_LP[amostra$NOTA_LP>300&amostra$NOTA_LP<350]
+lp5 <- amostra$NOTA_LP[amostra$NOTA_LP>350]
+
+t <- data.frame(length(lp1),length(lp2),length(lp3),length(lp4),length(lp5))
 
 # < 200 | <200-250 | 250-300 | 300-350 | 350 +
-# mt1 <- amostra$NOTA_MT[amostra$NOTA_MT<200]
-# mt2 <- amostra$NOTA_MT[amostra$NOTA_MT>200&amostra$NOTA_MT<250]
-# mt3 <- amostra$NOTA_MT[amostra$NOTA_MT>250&amostra$NOTA_MT<300]
-# mt4 <- amostra$NOTA_MT[amostra$NOTA_MT>300&amostra$NOTA_MT<350]
-# mt5 <- amostra$NOTA_MT[amostra$NOTA_MT>350]
+mt1 <- amostra$NOTA_MT[amostra$NOTA_MT<200]
+mt2 <- amostra$NOTA_MT[amostra$NOTA_MT>200&amostra$NOTA_MT<250]
+mt3 <- amostra$NOTA_MT[amostra$NOTA_MT>250&amostra$NOTA_MT<300]
+mt4 <- amostra$NOTA_MT[amostra$NOTA_MT>300&amostra$NOTA_MT<350]
+mt5 <- amostra$NOTA_MT[amostra$NOTA_MT>350]
+
+t2 <- data.frame(length(mt1),length(mt2),length(mt3),length(mt4),length(mt5))
+t2
+
+colnames(t) <- c("Até 200","200 a 250","250 a 300","300 a 350","350 ou mais")
+colnames(t2) <- c("Até 200","200 a 250","250 a 300","300 a 350","350 ou mais")
+
+freq <- rbind(t,t2)
+rownames(freq) <- c("Notas em língua portuguesa","Notas em matemática")
+
+rm(t,t2,lp1,lp2,lp3,lp4,lp5,mt1,mt2,mt3,mt4,mt5)
 
 #--------------------------------------------------
 
 # Histograma
 
 hist(amostra$NOTA_LP,
-     main = "título",
-     xlab = "eixo x", 
-     ylab = "eixo y")
+     main = "Histograma - Notas em língua portuguesa",
+     xlab = "", 
+     ylab = "")
 
 hist(amostra$NOTA_MT,
-     main = "título",
-     xlab = "eixo x", 
-     ylab = "eixo y")
+     main = "Histograma - Notas em matemática",
+     xlab = "", 
+     ylab = "")
 
-# Medidas de posição, variabilidade, assimetria e curtose.
+#--------------------------------------------------
+# Medidas de posição, variabilidade(Média, Mediana, desvio padrão, Range, Mean Deviation,
+# Interquartile Range), assimetria e curtose
 
-skewness(amostra$NOTA_LP)
-skewness(amostra$NOTA_MT)
+# NOTA_LP
 
-kurtosis(amostra$NOTA_LP)
-kurtosis(amostra$NOTA_MT)
+m1 <- quantile(amostra$NOTA_LP)
+m1 <-as.data.frame(m1)
+m2 <- mean(amostra$NOTA_LP)
+m3 <- median(amostra$NOTA_LP)
+m4 <- sd(amostra$NOTA_LP)
+m5 <- max(amostra$NOTA_LP)-min(amostra$NOTA_LP)
+m6 <- sum(abs(amostra$NOTA_LP-mean(amostra$NOTA_LP)))/length(amostra$NOTA_LP)
+m7 <- IQR(amostra$NOTA_LP)
+m8 <- skewness(amostra$NOTA_LP)
+m9 <- kurtosis(amostra$NOTA_LP)
+
+mlp <- rbind(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+
+colnames(mlp) <- "Valores"
+rownames(mlp) <- c("Menor valor","Primeiro quartil","Segundo quartil","Terceiro quartil","Maior valor",
+                   "Média","Mediana","Desvio padrão","Amplitude","Deesvio absoluto",
+                   "Amplitude interquartílica","Assimetria","Curtose")
+mlp <- t(mlp)
+mlp <-as.data.frame(mlp)
+
+rm(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+
+# NOTA_MT
+
+m1 <- quantile(amostra$NOTA_MT)
+m1 <-as.data.frame(m1)
+m2 <- mean(amostra$NOTA_MT)
+m3 <- median(amostra$NOTA_MT)
+m4 <- sd(amostra$NOTA_MT)
+m5 <- max(amostra$NOTA_MT)-min(amostra$NOTA_MT)
+m6 <- sum(abs(amostra$NOTA_MT-mean(amostra$NOTA_MT)))/length(amostra$NOTA_MT)
+m7 <- IQR(amostra$NOTA_MT)
+m8 <- skewness(amostra$NOTA_MT)
+m9 <- kurtosis(amostra$NOTA_MT)
+
+mmt <- rbind(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+
+colnames(mmt) <- "Valores"
+rownames(mmt) <- c("Menor valor","Primeiro quartil","Segundo quartil","Terceiro quartil","Maior valor",
+                   "Média","Mediana","Desvio padrão","Amplitude","Deesvio absoluto",
+                   "Amplitude interquartílica","Assimetria","Curtose")
+mmt <- t(mmt)
+mmt <-as.data.frame(mmt)
+
+rm(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+
+#--------------------------------------------------
 
 # Box-plot
 
 boxplot(amostra$NOTA_MT,amostra$NOTA_LP, 
         names=c("Notas matemática","Notas português"),
-        xlab="Eixo X",ylab="eixo Y", col = c("orange", "yellow"),
-        main = "Título")
+        xlab="",ylab="",
+        main = "Box-plot das notas em matemática e língua portuguesa")#,
+      # col = c("orange", "yellow")
 
 # Análise dos resultados, incluindo comentários sobre normalidade (não é para fazer testes de hipóteses).
 

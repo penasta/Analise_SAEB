@@ -1,8 +1,19 @@
 ---
 title: "ANÁLISE DESCRITIVA DE DADOS - RESULTADOS DO SAEB (ANEB - PROVA BRASIL) - 2017"
 author: "Bruno Gondim Toledo"
-date: '2022-07-01'
-output: pdf_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+email: '150167636@aluno.unb.br'
+organization: 'Universidade de Brasília'
+url: 'https://github.com/penasta/Analise_SAEB'
+output:
+  pdf_document:
+  number_sections: true
+
+header-includes:
+  - \usepackage{titling}
+  - \pretitle{\begin{center}
+    \includegraphics[width=2in,height=2in]{logo.jpg}\LARGE\\}
+  - \posttitle{\end{center}}
 ---
 
 ```{r setup, include=FALSE}
@@ -17,9 +28,6 @@ library(pastecs)
 library(knitr)
 
 amostra <- read_csv("Banco/amostra_150167636.csv")
-
-# summary(amostra$NOTA_LP)
-# str(amostra)
 
 amostra <- amostra %>%
   mutate_if(sapply(amostra, is.character), as.factor)
@@ -42,97 +50,235 @@ amostra$ESC_PAI <- factor(amostra$ESC_PAI,levels = c("Nunca estudou",
 "Completou o Ensino Médio, mas não completou a Faculdade",
 "Completou a Faculdade","Não sei"))
 
-amostra$COMPUTADOR <- factor(amostra$COMPUTADOR,levels = c("Não faço trabalhos domésticos",
-"Menos de 1 hora", "Entre 1 e 2 horas","Mais de 2 horas, até 3 horas","Mais de 3 horas"))
-
 ```
 
+\newpage
 
+# 1. Comente sobre a coleta de dados do SAEB: população alvo, população acessível, características levantadas, método de coleta (no máximo 10 linhas).
 
-1. Comente sobre a coleta de dados do SAEB: população alvo, população acessível, características levantadas, método de coleta (no máximo 10 linhas).
+O SAEB é realizado de dois em dois anos por amostragem de alunos, através da Avaliação Nacional da Educação Básica (Aneb) (pesquisa amostral aplicada para os alunos do 3º ao 5º ano do Ensino Fundamental e Ensino Médio, da rede pública e particular) e a Avaliação Nacional do Rendimento Escolar (Anresc) (pesquisa censitária aplicada apenas na rede pública, em alunos do 5º e 9º ano do Ensino Fundamental.)
+produz informações a respeito da realidade educacional por regiões brasileiras
 
+Fonte: [Wikipedia](https://pt.wikipedia.org/wiki/Sistema_Nacional_de_Avaliação_da_Educação_Básica)
 
+# 2. Liste as variáveis disponibilizadas na amostra que você recebeu (com seu número de matrícula) e classifique-as segundo o tipo.
 
-2. Liste as variáveis disponibilizadas na amostra que você recebeu (com seu número de matrícula) e classifique-as segundo o tipo.
+ANO: Variável qualitativa nominal
 
-ANO: ano de realização do SAEB [Variável qualitativa nominal]
+REGIAO: Variável qualitativa nominal
 
-REGIAO: Região de localização da escola do estudante (1-Norte, 2-Nordeste, 3-Sudeste, 4-Sul, 5-Centro-Oeste) [Variável qualitativa nominal]
+UF: Variável qualitativa nominal
 
-UF: Unidade da Federação de localização da escola do estudante [Variável qualitativa nominal]
+MUNICIPIO: Variável qualitativa nominal
 
-MUNICIPIO: Município de localização da escola do estudante [Variável qualitativa nominal]
+AREA: Variável qualitativa nominal
 
-AREA: Área de localização da escola do estudante (1-capital ou 2- interior) [Variável qualitativa nominal]
+LOCALIZACAO: Variável qualitativa nominal
 
-LOCALIZACAO: Localização da escola do estudante(1-urbana ou 2-rural) [Variável qualitativa nominal]
+DEPENDENCIA_ADM : Variável qualitativa nominal
 
-DEPENDENCIA_ADM : Categoria administrativa da escola do estudante (1-Federal, 2-Estadual, 3-Municipal, 4-Privada) [Variável qualitativa nominal]
+NOTA_LP: Variável quantitativa discreta
 
-NOTA_LP: Proficiência em Língua Portuguesa transformada na escala única do SAEB, com média = 250, desvio = 50 (do SAEB/97) [Variável quantitativa discreta]
+NOTA_MT: Variável quantitativa discreta
 
-NOTA_MT: Proficiência do aluno em Matemática transformada na escala única do SAEB, com média = 250, desvio = 50 (do SAEB/97) [Variável quantitativa discreta]
+SEXO: Variável qualitativa nominal
 
-SEXO: Sexo do estudante (A-Masculino, B-Feminino) [Variável qualitativa nominal]
+RACA_COR: Variável qualitativa nominal
 
-RACA_COR: Raça/cor do estudante (A-Branca, B-Preta, C-Parda, D-Amarela, E-Indígena, F-Não quero declarar) [Variável qualitativa nominal]
+Ano de nascimento: Variável qualitativa ordinal
 
-Ano de nascimento:  ano de nascimento (1998 ou antes - agrupado) [Variável qualitativa ordinal]
+COMPUTADOR: Variável qualitativa ordinal
 
-COMPUTADOR: Tem computador em casa? (Não tem, Sim, um, Sim, dois, Sim, três, Sim, quatro ou mais) [Variável qualitativa ordinal]
+ESC_MAE: Variável qualitativa ordinal
 
+ESC_PAI: Variável qualitativa ordinal
 
-ESC_MAE:  categorias de escolaridade [Variável qualitativa ordinal]
-ESC_PAI: categorias de escolaridade [Variável qualitativa ordinal]
+USO_TEMPO_TELAS: Variável qualitativa ordinal
 
-USO_TEMPO_TELAS: Tempo gasto assistindo à TV, navegando na internet ou jogando jogos eletrônicos em dias de aula (Menos de 1 hora, Entre 1 e 2 horas, Mais de 2 horas, até 3 horas, Mais de 3 horas, Não vejo TV, não navego na internet e não jogo jogos eletrônicos) [Variável qualitativa ordinal]
+AFAZERES_DOM: Variável qualitativa ordinal
 
-AFAZERES_DOM:  Tempo gasto fazendo trabalhos domésticos (ex.: lavando louça, limpando o quintal etc.) em dias de aula (Menos de 1 hora, Entre 1 e 2 horas, Mais de 2 horas, até 3 horas, Mais de 3 horas, Não faço trabalhos domésticos) [Variável qualitativa ordinal]
+TRABALHO: Variável qualitativa nominal
 
-TRABALHO: Se trabalha (Sim, Não) [Variável qualitativa nominal]
+Perspectivas: Variável qualitativa nominal
 
-Perspectivas: Perspectivas futuras [Variável qualitativa nominal]
+\centering
+\newpage
 
+# 3. Escolha CINCO variáveis categóricas e apresente-as em forma tabular e gráfica. Comente os resultados.
 
-
-3. Escolha CINCO variáveis categóricas e apresente-as em forma tabular e gráfica. Comente os resultados.
-
+COMPUTADOR        
+```{r, echo=FALSE}
+ggplot(amostra,aes(COMPUTADOR)) + 
+  geom_bar(na.rm=T)+ 
+  scale_x_discrete(na.translate = FALSE)+ 
+  ggtitle("Tem computador em casa?") +
+  xlab("") +
+  ylab("")
+kable(table(amostra$COMPUTADOR),
+      col.names=c("Tem computador em casa?","Frequência"))
+```
+\newpage
 PERSPECTIVAS        
 ```{r, echo=FALSE}
+ggplot(amostra,aes(PERSPECTIVAS)) +
+  geom_bar(na.rm=T)+
+  scale_x_discrete(na.translate = FALSE)+ 
+  ggtitle("Perspectivas futuras") +
+  xlab("") +
+  ylab("")
 kable(table(amostra$PERSPECTIVAS),
       col.names=c("Perspectivas futuras","Frequência"))
 ```
-
+\newpage
 ESC_MAE         
 ```{r, echo=FALSE}
+ggplot(amostra,aes(ESC_MAE)) +
+  geom_bar(na.rm=T)+
+  scale_x_discrete(na.translate = FALSE)+ 
+  ggtitle("Escolaridade da mãe") +
+  xlab("") +
+  ylab("")
 kable(table(amostra$ESC_MAE),
       col.names=c("Escolaridade da mãe","Frequência"))
 ```
-
+\newpage
 ESC_PAI        
 ```{r, echo=FALSE}
+ggplot(amostra,aes(ESC_PAI)) +
+  geom_bar(na.rm=T)+
+  scale_x_discrete(na.translate = FALSE)+ 
+  ggtitle("Escolaridade do pai") +
+  xlab("") +
+  ylab("")
 kable(table(amostra$ESC_PAI),
       col.names=c("Escolaridade do pai","Frequência"))
 ```
-
+\newpage
 AFAZERES_DOM         
 ```{r, echo=FALSE}
+ggplot(amostra,aes(AFAZERES_DOM)) +
+  geom_bar(na.rm=T)+
+  scale_x_discrete(na.translate = FALSE)+ 
+  ggtitle("Tempo gasto fazendo trabalhos domésticos") +
+  xlab("") +
+  ylab("")
 kable(table(amostra$AFAZERES_DOM),
       col.names=c("Tempo gasto fazendo trabalhos domésticos","Frequência"))
 ```
 
-TRABALHO
-```{r, echo=FALSE}
-kable(table(amostra$TRABALHO),
-      col.names=c("Se trabalha","Frequência"))
+\newpage
+
+# 4. Para as variáveis quantitativas NOTA_LP e NOTA_MT apresente:
+
+``` {r, include=FALSE}
+
+lp1 <- amostra$NOTA_LP[amostra$NOTA_LP<200]
+lp2 <- amostra$NOTA_LP[amostra$NOTA_LP>200&amostra$NOTA_LP<250]
+lp3 <- amostra$NOTA_LP[amostra$NOTA_LP>250&amostra$NOTA_LP<300]
+lp4 <- amostra$NOTA_LP[amostra$NOTA_LP>300&amostra$NOTA_LP<350]
+lp5 <- amostra$NOTA_LP[amostra$NOTA_LP>350]
+
+t <- data.frame(length(lp1),length(lp2),length(lp3),length(lp4),length(lp5))
+
+mt1 <- amostra$NOTA_MT[amostra$NOTA_MT<200]
+mt2 <- amostra$NOTA_MT[amostra$NOTA_MT>200&amostra$NOTA_MT<250]
+mt3 <- amostra$NOTA_MT[amostra$NOTA_MT>250&amostra$NOTA_MT<300]
+mt4 <- amostra$NOTA_MT[amostra$NOTA_MT>300&amostra$NOTA_MT<350]
+mt5 <- amostra$NOTA_MT[amostra$NOTA_MT>350]
+
+t2 <- data.frame(length(mt1),length(mt2),length(mt3),length(mt4),length(mt5))
+t2
+
+colnames(t) <- c("Até 200","200 a 250","250 a 300","300 a 350","350 ou mais")
+colnames(t2) <- c("Até 200","200 a 250","250 a 300","300 a 350","350 ou mais")
+
+freq <- rbind(t,t2)
+rownames(freq) <- c("Notas em língua portuguesa","Notas em matemática")
+
+rm(t,t2,lp1,lp2,lp3,lp4,lp5,mt1,mt2,mt3,mt4,mt5)
+
 ```
 
+## Distribuição de frequências, com intervalos de classe
 
+``` {r,echo=FALSE}
+kable(freq)
+```
 
-4. Para as variáveis quantitativas NOTA_LP e NOTA_MT apresente:
+## Histograma
 
-Distribuição de frequências, com intervalos de classe
-Histograma
-Medidas de posição, variabilidade, assimetria e curtose.
-Box-plot
-Análise dos resultados, incluindo comentários sobre normalidade (não é para fazer testes de hipóteses).
+```{r,echo=FALSE}
+
+hist(amostra$NOTA_LP,
+     main = "Histograma - Notas em língua portuguesa",
+     xlab = "", 
+     ylab = "")
+
+hist(amostra$NOTA_MT,
+     main = "Histograma - Notas em matemática",
+     xlab = "", 
+     ylab = "")
+
+```
+\newpage
+
+## Medidas de posição, variabilidade, assimetria e curtose.
+
+```{r,include=FALSE}
+m1 <- quantile(amostra$NOTA_LP)
+m1 <-as.data.frame(m1)
+m2 <- mean(amostra$NOTA_LP)
+m3 <- median(amostra$NOTA_LP)
+m4 <- sd(amostra$NOTA_LP)
+m5 <- max(amostra$NOTA_LP)-min(amostra$NOTA_LP)
+m6 <- sum(abs(amostra$NOTA_LP-mean(amostra$NOTA_LP)))/length(amostra$NOTA_LP)
+m7 <- IQR(amostra$NOTA_LP)
+m8 <- skewness(amostra$NOTA_LP)
+m9 <- kurtosis(amostra$NOTA_LP)
+mlp <- rbind(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+colnames(mlp) <- "Valores"
+rownames(mlp) <- c("Menor valor","Primeiro quartil","Segundo quartil","Terceiro quartil","Maior valor",
+                   "Média","Mediana","Desvio padrão","Amplitude","Desvio absoluto",
+                   "Amplitude interquartílica","Assimetria","Curtose")
+mlp <- t(mlp)
+mlp <-as.data.frame(mlp)
+rm(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+m1 <- quantile(amostra$NOTA_MT)
+m1 <-as.data.frame(m1)
+m2 <- mean(amostra$NOTA_MT)
+m3 <- median(amostra$NOTA_MT)
+m4 <- sd(amostra$NOTA_MT)
+m5 <- max(amostra$NOTA_MT)-min(amostra$NOTA_MT)
+m6 <- sum(abs(amostra$NOTA_MT-mean(amostra$NOTA_MT)))/length(amostra$NOTA_MT)
+m7 <- IQR(amostra$NOTA_MT)
+m8 <- skewness(amostra$NOTA_MT)
+m9 <- kurtosis(amostra$NOTA_MT)
+mmt <- rbind(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+colnames(mmt) <- "Valores"
+rownames(mmt) <- c("Menor valor","Primeiro quartil","Segundo quartil","Terceiro quartil","Maior valor",
+                   "Média","Mediana","Desvio padrão","Amplitude","Desvio absoluto",
+                   "Amplitude interquartílica","Assimetria","Curtose")
+mmt <- t(mmt)
+mmt <-as.data.frame(mmt)
+rm(m1,m2,m3,m4,m5,m6,m7,m8,m9)
+```
+
+### Variável NOTA_LP
+```{r,echo=FALSE}
+kable(t(mlp))
+```
+### Variável NOTA_MT
+```{r,echo=FALSE}
+kable(t(mmt))
+```
+\newpage
+## Box-plot
+
+```{r,echo=FALSE}
+boxplot(amostra$NOTA_MT,amostra$NOTA_LP, 
+        names=c("Notas matemática","Notas português"),
+        xlab="",ylab="",
+        main = "Box-plot das notas em matemática e língua portuguesa")
+```
+
+## Análise dos resultados, incluindo comentários sobre normalidade (não é para fazer testes de hipóteses).
