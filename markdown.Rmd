@@ -324,6 +324,8 @@ boxplot(amostra$NOTA_MT,amostra$NOTA_LP,
 
 ## Análise dos resultados, incluindo comentários sobre normalidade (não é para fazer testes de hipóteses).
 
+### Análise visual com gráficos de densidade
+
 \raggedright
 Primeiramente, fazendo uma análise visual para a normalidade das variáveis: Nota em Matemática, e Nota em língua portuguesa, utilizando gráficos de densidade.
 \centering
@@ -349,6 +351,8 @@ Estes gráficos fornecem um julgamento visual sobre se a distribuição tem form
 \centering
 
 \newpage
+
+### Análise visual com gráficos Q-Q
 
 \raggedright
 Ainda em análise visual, podemos utilizar um gráfico Q-Q (quantil-quantil), que desenha a correlação entre uma determinada amostra e a distribuição normal. Uma linha de referência de 45 graus também será plotada.
@@ -377,7 +381,10 @@ Existem vários métodos para teste de normalidade, como o teste de normalidade 
 
 \newpage
 
+### Teste de normalidade Shapiro-Wilk
+
 \raggedright
+
 Farei, portanto, um teste de normalidade para cada variável, utilizando o teste de Shapiro-Wilk para normalidade de uma amostra.
 
 A estatística do teste é: W, dada por:
