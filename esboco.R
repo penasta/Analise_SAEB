@@ -214,3 +214,29 @@ boxplot(amostra$NOTA_MT,amostra$NOTA_LP,
 
 # Análise dos resultados, incluindo comentários sobre normalidade (não é para fazer testes de hipóteses).
 
+pacman::p_load(dplyr,ggpubr)
+
+# Visual methods
+# Density plot and Q-Q plot can be used to check normality visually.
+# Density plot: the density plot provides a visual judgment about whether the distribution is bell shaped.
+
+ggdensity(amostra$NOTA_MT, 
+          main = "Gráfico de densidade das notas em matemática",
+          xlab = "Notas",
+          ylab = "Densidade")
+
+ggdensity(amostra$NOTA_LP, 
+          main = "Gráfico de densidade das notas em língua portuguesa",
+          xlab = "Notas",
+          ylab = "Densidade")
+
+# Q-Q plot: Q-Q plot (or quantile-quantile plot) draws the correlation between 
+# a given sample and the normal distribution. A 45-degree reference line is also plotted.
+
+ggqqplot(amostra$NOTA_MT)
+ggqqplot(amostra$NOTA_LP)
+
+# Testes de normalidade:
+
+shapiro.test(amostra$NOTA_MT)
+shapiro.test(amostra$NOTA_LP)

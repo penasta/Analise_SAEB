@@ -56,8 +56,7 @@ amostra$ESC_PAI <- factor(amostra$ESC_PAI,levels = c("Nunca estudou",
 
 # 1. Comente sobre a coleta de dados do SAEB: população alvo, população acessível, características levantadas, método de coleta (no máximo 10 linhas).
 
-O SAEB é realizado de dois em dois anos por amostragem de alunos, através da Avaliação Nacional da Educação Básica (Aneb) (pesquisa amostral aplicada para os alunos do 3º ao 5º ano do Ensino Fundamental e Ensino Médio, da rede pública e particular) e a Avaliação Nacional do Rendimento Escolar (Anresc) (pesquisa censitária aplicada apenas na rede pública, em alunos do 5º e 9º ano do Ensino Fundamental.)
-produz informações a respeito da realidade educacional por regiões brasileiras
+O SAEB é realizado de dois em dois anos por amostragem de alunos, através da Avaliação Nacional da Educação Básica (Aneb) (pesquisa amostral aplicada para os alunos do 3º ao 5º ano do Ensino Fundamental e Ensino Médio, da rede pública e particular) e a Avaliação Nacional do Rendimento Escolar (Anresc) (pesquisa censitária aplicada apenas na rede pública, em alunos do 5º e 9º ano do Ensino Fundamental.) produz informações a respeito da realidade educacional por regiões brasileiras
 
 Fonte: [Wikipedia](https://pt.wikipedia.org/wiki/Sistema_Nacional_de_Avaliação_da_Educação_Básica)
 
@@ -101,12 +100,14 @@ TRABALHO: Variável qualitativa nominal
 
 Perspectivas: Variável qualitativa nominal
 
+```{=tex}
 \centering
 \newpage
-
+```
 # 3. Escolha CINCO variáveis categóricas e apresente-as em forma tabular e gráfica. Comente os resultados.
 
-COMPUTADOR        
+COMPUTADOR
+
 ```{r, echo=FALSE}
 ggplot(amostra,aes(COMPUTADOR)) + 
   geom_bar(na.rm=T)+ 
@@ -117,8 +118,15 @@ ggplot(amostra,aes(COMPUTADOR)) +
 kable(table(amostra$COMPUTADOR),
       col.names=c("Tem computador em casa?","Frequência"))
 ```
+
+\raggedright
+44,7% dos estudantes amostrados não possuem computador em casa, e dentro dos que possuem, 40,2% dizem possuir apenas um.
+\centering
+
 \newpage
-PERSPECTIVAS        
+
+PERSPECTIVAS
+
 ```{r, echo=FALSE}
 ggplot(amostra,aes(PERSPECTIVAS)) +
   geom_bar(na.rm=T)+
@@ -129,8 +137,15 @@ ggplot(amostra,aes(PERSPECTIVAS)) +
 kable(table(amostra$PERSPECTIVAS),
       col.names=c("Perspectivas futuras","Frequência"))
 ```
+
+\raggedright
+A maior parte dos estudantes amostrados (85,9%) relatam a perspectiva de continuarem estudanto, dos quais a maioria absoluta pretende também trabalhar enquanto estudam. Uma minoria considerável (10.95%) relata não saber ainda suas perspectivas futuras.
+\centering
+
 \newpage
-ESC_MAE         
+
+ESC_MAE
+
 ```{r, echo=FALSE}
 ggplot(amostra,aes(ESC_MAE)) +
   geom_bar(na.rm=T)+
@@ -141,8 +156,15 @@ ggplot(amostra,aes(ESC_MAE)) +
 kable(table(amostra$ESC_MAE),
       col.names=c("Escolaridade da mãe","Frequência"))
 ```
+
+\raggedright
+Uma parcela considerável dos estudantes amostrados (29,55%) relatam que a mãe sequer concluiu o ensino médio. Dentre as que concluíram alguma faculdade, o percentual é abaixo de 10% (9,7%)
+\centering
+
 \newpage
-ESC_PAI        
+
+ESC_PAI
+
 ```{r, echo=FALSE}
 ggplot(amostra,aes(ESC_PAI)) +
   geom_bar(na.rm=T)+
@@ -153,8 +175,15 @@ ggplot(amostra,aes(ESC_PAI)) +
 kable(table(amostra$ESC_PAI),
       col.names=c("Escolaridade do pai","Frequência"))
 ```
+
+\raggedright
+No caso da escolaridade paterna dentre os estudantes amostrados, uma parcela menor é relatada não ter concluído sequer o ensino médio (26,7%), porém dentre os graduados a proporção também é menor que no caso da escolaridade materna, sendo apenas 7% dos pais formados em alguma faculdade.
+\centering
+
 \newpage
-AFAZERES_DOM         
+
+AFAZERES_DOM
+
 ```{r, echo=FALSE}
 ggplot(amostra,aes(AFAZERES_DOM)) +
   geom_bar(na.rm=T)+
@@ -166,11 +195,15 @@ kable(table(amostra$AFAZERES_DOM),
       col.names=c("Tempo gasto fazendo trabalhos domésticos","Frequência"))
 ```
 
+\raggedright
+A grande maioria dos estudantes amostrados (86,2%) relatam terem afazeres domésticos diários.
+\centering
+
 \newpage
 
 # 4. Para as variáveis quantitativas NOTA_LP e NOTA_MT apresente:
 
-``` {r, include=FALSE}
+```{r, include=FALSE}
 
 lp1 <- amostra$NOTA_LP[amostra$NOTA_LP<200]
 lp2 <- amostra$NOTA_LP[amostra$NOTA_LP>200&amostra$NOTA_LP<250]
@@ -201,7 +234,7 @@ rm(t,t2,lp1,lp2,lp3,lp4,lp5,mt1,mt2,mt3,mt4,mt5)
 
 ## Distribuição de frequências, com intervalos de classe
 
-``` {r,echo=FALSE}
+```{r,echo=FALSE}
 kable(freq)
 ```
 
@@ -220,6 +253,7 @@ hist(amostra$NOTA_MT,
      ylab = "")
 
 ```
+
 \newpage
 
 ## Medidas de posição, variabilidade, assimetria e curtose.
@@ -264,14 +298,19 @@ rm(m1,m2,m3,m4,m5,m6,m7,m8,m9)
 ```
 
 ### Variável NOTA_LP
+
 ```{r,echo=FALSE}
 kable(t(mlp))
 ```
+
 ### Variável NOTA_MT
+
 ```{r,echo=FALSE}
 kable(t(mmt))
 ```
+
 \newpage
+
 ## Box-plot
 
 ```{r,echo=FALSE}
@@ -281,4 +320,78 @@ boxplot(amostra$NOTA_MT,amostra$NOTA_LP,
         main = "Box-plot das notas em matemática e língua portuguesa")
 ```
 
+\newpage
+
 ## Análise dos resultados, incluindo comentários sobre normalidade (não é para fazer testes de hipóteses).
+
+\raggedright
+Primeiramente, fazendo uma análise visual para a normalidade das variáveis: Nota em Matemática, e Nota em língua portuguesa, utilizando gráficos de densidade.
+\centering
+
+```{r,echo=FALSE}
+
+pacman::p_load(dplyr,ggpubr)
+
+ggdensity(amostra$NOTA_MT, 
+          main = "Gráfico de densidade das notas em matemática",
+          xlab = "Notas",
+          ylab = "Densidade")
+
+ggdensity(amostra$NOTA_LP, 
+          main = "Gráfico de densidade das notas em língua portuguesa",
+          xlab = "Notas",
+          ylab = "Densidade")
+
+```
+
+\raggedright
+Estes gráficos fornecem um julgamento visual sobre se a distribuição tem forma de sino. A forma lembra o formato de sino do gráfico de densidade da distribuição normal. Mas só isso não é suficiente para tal afirmação. 
+\centering
+
+\newpage
+
+\raggedright
+Ainda em análise visual, podemos utilizar um gráfico Q-Q (quantil-quantil), que desenha a correlação entre uma determinada amostra e a distribuição normal. Uma linha de referência de 45 graus também será plotada.
+\centering
+
+```{r,echo=FALSE}
+
+ggqqplot(amostra$NOTA_MT, 
+          main = "Gráfico Q-Q das notas em matemática",
+          xlab = "Esperado",
+          ylab = "Amostra")
+ggqqplot(amostra$NOTA_LP, 
+          main = "Gráfico Q-Q das notas em língua portuguesa",
+          xlab = "Esperado",
+          ylab = "Amostra")
+
+```
+
+\raggedright
+Para os valores mais próximos aos extremos, a amostra parece divergir um pouco do esperado para a distribuição normal para ambas as variáveis. Porém, a maioria das observações centrais aparentam convergir com a normalidade.
+
+A análise visual da normalidade é importante para compararmos de forma didática o comportamento esperado, e o de fato observado na amostragem. Porém, geralmente não é confiável por sí só. É possível usar um teste de significância comparando a distribuição da amostra com uma normal para verificar se os dados mostram ou não um desvio grave da normalidade.
+
+Existem vários métodos para teste de normalidade, como o teste de normalidade de Kolmogorov-Smirnov e o teste de Shapiro-Wilk.
+\centering
+
+\newpage
+
+\raggedright
+Farei, portanto, um teste de normalidade para cada variável, utilizando o teste de Shapiro-Wilk para normalidade de uma amostra.
+
+A estatística do teste é: W, dada por:
+
+\centering
+$W = \frac{(\sum_{i=1}^{n}a_{i}x_{(i)})^2 }{\sum_{i=1}^{n}(x_{i}-\bar{x})^2}$
+
+```{r,echo=FALSE}
+
+shapiro.test(amostra$NOTA_MT)
+shapiro.test(amostra$NOTA_LP)
+
+```
+
+\raggedright
+Do output, o p-valor < 0,05 em ambas as variáveis (Nota em matemática: 0.00006136; Nota em língua portuguesa: 0.00000002214) implica que a distribuição dos dados é significativamente diferente da distribuição normal. Em outras palavras, não podemos assumir a normalidade dessas variáveis para essa amostra.
+\centering
